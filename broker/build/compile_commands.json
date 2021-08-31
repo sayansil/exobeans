@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/build/src",
+  "command": "/usr/bin/c++ -Dbroker_EXPORTS -I/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/include -O3 -DNDEBUG -fPIC -std=gnu++17 -o CMakeFiles/broker.dir/broker.cpp.o -c /run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/broker.cpp",
+  "file": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/broker.cpp"
+},
+{
+  "directory": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/build/src",
+  "command": "/usr/bin/c++ -Dbroker_EXPORTS -I/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/include -O3 -DNDEBUG -fPIC -std=gnu++17 -o CMakeFiles/broker.dir/job.cpp.o -c /run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/job.cpp",
+  "file": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/job.cpp"
+},
+{
+  "directory": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/build/src",
+  "command": "/usr/bin/c++ -Dbroker_EXPORTS -I/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/include -O3 -DNDEBUG -fPIC -std=gnu++17 -o CMakeFiles/broker.dir/tube.cpp.o -c /run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/tube.cpp",
+  "file": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/src/tube.cpp"
+},
+{
+  "directory": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/build/run",
+  "command": "/usr/bin/c++  -I/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/include -O3 -DNDEBUG -fPIE -std=gnu++17 -o CMakeFiles/run.dir/main.cpp.o -c /run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/run/main.cpp",
+  "file": "/run/media/sayan/Data/Programmer/Practice/exotl/cpp/broker/run/main.cpp"
+}
+]
