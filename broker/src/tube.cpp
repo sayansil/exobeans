@@ -10,43 +10,39 @@ Tube::~Tube()
     kill();
 }
 
-int Tube::push_job(Job::Job job)
+int Tube::push_job(Job job)
 {
     this->q.push(job);
     return 1;
 }
 
-Job::Job Tube::peek_top_job()
+Job Tube::peek_top_job()
 {
     return this->q.top();
 }
 
 bool Tube::can_reserve_job()
 {
-    if (this->q.empty())
+    if (this->q.empty() || this->reserved)
         return false;
 
-    Job::Job front = this->q.top();
-    return !front.status;
+    return true;
 }
 
-Job::Job Tube::reserve_job()
+Job Tube::reserve_job()
 {
-    Job::Job front = this->q.top();
-
-    //TODO mark front.status as true
+    const Job &front = this->q.top();
+    this->reserved = true;
 
     return front;
 }
 
 bool Tube::can_delete_job(const std::string &id)
 {
-    if (this->q.empty())
+    if (this->q.empty() || !this->reserved)
         return false;
 
-    Job::Job front = this->q.top();
-    if (!front.status)
-        return false;
+    Job front = this->q.top();
 
     return front.id == id;
 }
@@ -54,8 +50,9 @@ bool Tube::can_delete_job(const std::string &id)
 void Tube::delete_job()
 {
     this->q.pop();
+    this->reserved = false;
 }
 
-void kill()
+void Tube::kill()
 {
 }

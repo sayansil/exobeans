@@ -1,35 +1,26 @@
-cmake_minimum_required(VERSION 3.5)
-
-project(BROKER
-    DESCRIPTION "Exobeanstalkd Broker"
-    LANGUAGES C CXX
-    )
-
-
-include(FetchContent)
-include(cmake/download_file.cmake)
-
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-    include(cmake/add_FetchContent_MakeAvailable.cmake)
-endif()
-
-set(BROKER_LIB "broker")
+# set(CMAKE_BUILD_TYPE "RELEASE")
+set(CMAKE_CXX_STANDARD 17)
 set(BROKER_EXE "run")
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-find_program(CCACHE_PROGRAM ccache)
+add_subdirectory(cpr)
 
-if(CCACHE_PROGRAM)
-    MESSAGE("CCACHE support enabled")
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CCACHE_PROGRAM}")
-endif()
+set(SOURCE_LIST
+    src/main.cpp
+    src/broker.cpp
+    src/job.cpp
+    src/tube.cpp
+)
 
-set(CMAKE_BUILD_TYPE "RELEASE")
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_POSITION_INDEPENDENT_CODE 1)
+add_executable(${BROKER_EXE} ${SOURCE_LIST})
+target_include_directories(${BROKER_EXE} PRIVATE
+            include
+            uWebSockets/src
+            uWebSockets/uSockets/src)
 
-set(FETCHCONTENT_QUIET FALSE)
-
-add_subdirectory(src)
-add_subdirectory(run)
+target_link_libraries(${BROKER_EXE} PRIVATE
+            cpr::cpr
+            ${CMAKE_CURRENT_SOURCE_DIR}/uWebSockets/uSockets/uSockets.a
+            dl
+            pthread
+            z)

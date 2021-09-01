@@ -9,9 +9,6 @@ class Job
         // Job priority
         int priority;
 
-        // Reserve status
-        bool status = false;
-
         // Job ID
         std::string id;
 

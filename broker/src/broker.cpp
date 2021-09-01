@@ -8,21 +8,21 @@ Broker::Broker()
 void Broker::create_tube(const std::string &t_id)
 {
     // Check if Tube id already exists
-    if (this->pipeline.count(t_id))
+    if (!this->pipeline.count(t_id))
     {
-        Tube::Tube new_tube(t_id);
+        Tube new_tube(t_id);
         this->pipeline[t_id] = new_tube;
     }
 }
 
-void Broker::add_job(const std::string &t_id, Job::Job job)
+void Broker::add_job(const std::string &t_id, Job job)
 {
     create_tube(t_id);
 
     int status = this->pipeline[t_id].push_job(job);
 }
 
-Job::Job Broker::reserveJob(const std::vector<std::string> &t_ids)
+Job Broker::reserveJob(const std::vector<std::string> &t_ids)
 {
     int n = t_ids.size();
 

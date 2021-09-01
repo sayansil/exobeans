@@ -12,6 +12,6 @@ Job::~Job()
     kill();
 }
 
-void kill()
+void Job::kill()
 {
 }

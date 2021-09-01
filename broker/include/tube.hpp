@@ -8,7 +8,7 @@
 class Compare // Job Priority (for priority queue)
 {
 public:
-    bool operator()(Job::Job a, Job::Job b)
+    bool operator()(Job a, Job b)
     {
         return a.priority < b.priority;
     }
@@ -20,8 +20,11 @@ public:
     // Tube Id
     std::string id;
 
+    // Reserved flag
+    bool reserved = false;
+
     // Priority Queue for Tube
-    std::priority_queue<Job::Job, std::vector<Job::Job>, Compare> q;
+    std::priority_queue<Job, std::vector<Job>, Compare> q;
 
     // Constructor
     Tube() = default;
@@ -31,12 +34,12 @@ public:
     ~Tube();
 
     // Queue Helper methods
-    int push_job(Job::Job job);
+    int push_job(Job job);
 
-    Job::Job peek_top_job();
+    Job peek_top_job();
 
     bool can_reserve_job();
-    Job::Job reserve_job();
+    Job reserve_job();
 
     bool can_delete_job(const std::string &id);
     void delete_job();
