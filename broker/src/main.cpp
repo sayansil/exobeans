@@ -129,7 +129,7 @@ void run_app()
                      m.lock();
                      try
                      {
-                         std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], ",");
+                         std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], "%2C");
 
                          Job job = broker->reserveJob(tubes);
 
@@ -175,7 +175,7 @@ void run_app()
                      m.lock();
                      try
                      {
-                         std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], ",");
+                         std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], "%2C");
 
                          if (broker->deleteJob(tubes, query_map["j_id"]))
                          {
