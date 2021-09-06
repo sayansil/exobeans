@@ -42,7 +42,7 @@ bool Tube::can_delete_job(const std::string &id)
     if (this->q.empty() || !this->reserved)
         return false;
 
-    Job front = this->q.top();
+    const Job &front = this->q.top();
 
     return front.id == id;
 }

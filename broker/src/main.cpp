@@ -3,13 +3,18 @@
 #include <iostream>
 #include <string_view>
 #include <App.h>
+#include <memory>
+#include <mutex>
+#include <thread>
+#include <algorithm>
 #include <nlohmann/json.hpp>
 
-Broker *broker;
+std::unique_ptr<Broker> broker;
+std::mutex m;
 
 void run_app()
 {
-    broker = new Broker();
+    broker = std::make_unique<Broker>();
 
     uWS::SSLApp()
         .get("/", [](auto *res, auto *req)
@@ -38,6 +43,7 @@ void run_app()
 
                  auto query_map = helper::fetch_params(req->getQuery());
 
+                 m.lock();
                  if (query_map.count("t_id") && query_map["t_id"].length() > 0)
                  {
                      broker->create_tube(query_map["t_id"]);
@@ -51,6 +57,7 @@ void run_app()
 
                  res->writeHeader("Content-Type", "application/json; charset=utf-8")
                      ->end(response.dump());
+                 m.unlock();
              })
 
         .get("/put", [](auto *res, auto *req)
@@ -71,6 +78,7 @@ void run_app()
 
                  if (query_map.count("t_id") && query_map.count("j_id") && query_map.count("j_d") && query_map["t_id"].length() > 0 && query_map["j_id"].length() > 0 && query_map["j_d"].length() > 0)
                  {
+                     m.lock();
                      try
                      {
                          int priority = 1;
@@ -91,6 +99,7 @@ void run_app()
                          response["status"] = "failure";
                          response["log"] = "Job could not be created";
                      }
+                     m.unlock();
                  }
                  else
                  {
@@ -117,6 +126,7 @@ void run_app()
 
                  if (query_map.count("t_ids") && query_map["t_ids"].length() > 0)
                  {
+                     m.lock();
                      try
                      {
                          std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], ",");
@@ -134,6 +144,7 @@ void run_app()
                          response["status"] = "failure";
                          response["log"] = "Job could not be reserved";
                      }
+                     m.unlock();
                  }
                  else
                  {
@@ -161,6 +172,7 @@ void run_app()
 
                  if (query_map.count("t_ids") && query_map["t_ids"].length() > 0 && query_map.count("j_id") && query_map["j_id"].length() > 0)
                  {
+                     m.lock();
                      try
                      {
                          std::vector<std::string> tubes = helper::tokenize(query_map["t_ids"], ",");
@@ -181,6 +193,7 @@ void run_app()
                          response["status"] = "failure";
                          response["log"] = "Job could not be deleted";
                      }
+                     m.unlock();
                  }
                  else
                  {
@@ -206,5 +219,9 @@ void run_app()
 
 int main(int argc, char **argv)
 {
-    run_app();
+    std::vector<std::thread *> threads(std::thread::hardware_concurrency());
+    std::transform(threads.begin(), threads.end(), threads.begin(), [](std::thread *t)
+                   { return new std::thread(&run_app); });
+    for (auto &i : threads)
+        i->join();
 }
