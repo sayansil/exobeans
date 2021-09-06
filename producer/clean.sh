@@ -1,3 +1,3 @@
 rm -rf build
-rm -rf uWebSockets
+rm -rf cpr
 rm -rf json
