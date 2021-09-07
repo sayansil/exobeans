@@ -4,8 +4,6 @@ set(BROKER_EXE "run")
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_CXX_FLAGS "-O3")
 
-add_subdirectory(cpr)
-
 set(SOURCE_LIST
     src/helper.cpp
     src/main.cpp
@@ -23,7 +21,6 @@ target_include_directories(${BROKER_EXE} PRIVATE
             uWebSockets/uSockets/src)
 
 target_link_libraries(${BROKER_EXE}
-            PRIVATE cpr::cpr
             ${CMAKE_CURRENT_SOURCE_DIR}/uWebSockets/uSockets/uSockets.a
             dl
             pthread
