@@ -5,7 +5,7 @@ int main()
 {
     Producer producer;
 
-    Job job("shanti_id", "shanti chai");
+    Job job("random_job_id", "This is how to do a random job");
 
     producer.use_tube("newtube");
     producer.push_job(job);

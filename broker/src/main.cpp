@@ -209,12 +209,12 @@ void run_app()
                 {
                     if (listen_socket)
                     {
-                        std::cout << "Listening on port " << 15000 << std::endl;
+                        std::cout << "Using a thread to listen to port " << 15000 << std::endl;
                     }
                 })
         .run();
 
-    std::cout << "Failed to listen on port 15000" << std::endl;
+    std::cout << "Failed to listen to port 15000" << std::endl;
 }
 
 int main(int argc, char **argv)
